@@ -1,0 +1,25 @@
+.button-edit {
+  color: black;
+}
+.button-edit :hover {
+  color: grey;
+}
+/* .button-delete :hover {
+  color: red;
+} */
+.button-delete,
+.button-edituser {
+  border: none;
+  background-color: transparent;
+}
+.alert {
+  width: 300px;
+  line-height: 50px;
+  padding: 0px 15px;
+  margin-top: 0px;
+}
+
+.button-checkout {
+  border: none;
+  background-color: transparent;
+}
