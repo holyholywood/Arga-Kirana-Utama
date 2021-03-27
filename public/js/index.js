@@ -31,3 +31,5 @@ exampleModal.addEventListener('show.bs.modal', function (event) {
   jumlahinput.max = jumlah
   form.action = actiondata
 })
+
+

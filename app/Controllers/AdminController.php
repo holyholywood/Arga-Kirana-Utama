@@ -258,4 +258,20 @@ class AdminController extends BaseController
         ]);
         return redirect()->to('/rekap');
     }
+
+    public function edittanggal()
+    {
+        $idtransaksi =  $this->request->getVar('id');
+        $tanggal = $this->request->getvar('InputTgl');
+        if ($tanggal) {
+            $this->transaksiModel->save([
+                'id_transaksi' => $idtransaksi,
+                'tanggal' => $tanggal
+            ]);
+            session()->setFlashdata('pesan', 'Tanggal Berhasil Diganti');
+            return redirect()->to('/rekap');
+        }
+        session()->setFlashdata('pesan', 'Tanggal tidak valid');
+        return redirect()->to('/rekap');
+    }
 }
