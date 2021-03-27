@@ -17,6 +17,13 @@
         <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 class="h2">Data keluar-Masuk Barang</h1>
+
+                <?php if (session()->getFlashdata('pesan')) : ?>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <?= session()->getFlashdata('pesan') ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <?php endif; ?>
             </div>
             <div class="d-flex justify-content-between">
                 <?php if ($dataBytanggal) : ?>
@@ -48,7 +55,7 @@
                                 $tanggal = date("l, d-m-Y", $date);
                                 ?>
                                 <td><?= $tanggal ?>
-                                    <button type="button" class="button-checkout button-edit ml-2" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap" data-bs-id="<?= $d['id_transaksi']; ?>" data-bs-barang="" data-bs-jumlah="" data-bs-title=" Data Keluar " data-bs-labeljumlah="Keluar " data-bs-action="#" data-toggle="tooltip" data-placement="bottom" title="Edit tangga">
+                                    <button type="button" class="button-checkout button-edit ml-2" data-toggle="tooltip" data-placement="bottom" title="Edit tanggal" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
                                             <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
                                         </svg>
@@ -60,6 +67,38 @@
                                 <td><?= $d['stock']; ?></td>
                                 <td><?= $d['tr_keterangan'] ?></td>
                             </tr>
+                            <!-- Modal -->
+                            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="staticBackdropLabel">Ganti Tanggal</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="/AdminController/edittanggal" method="POST">
+                                                <input type="hidden" name="id" value="<?= $d['id_transaksi'] ?>">
+                                                <div class="container-fluid">
+                                                    <div class="row text-start">
+                                                        <div class="col mb-2">
+                                                            <label class="form-label">Tanggal</label>
+                                                            <div class="form-group">
+                                                                <input class="form-control" type="date" value="" name="InputTgl" value="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                                    <input type="submit" class="btn btn-primary"></input>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- modal end -->
                         <?php endforeach; ?>
                 </table>
             </div>
@@ -67,53 +106,5 @@
         </div>
     </div>
 </div>
-<!-- modal In -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Keluarkan Barang</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="container-fluid">
-                    <form action="" method="post" class="post">
-                        <div class="row mb-2">
-                            <input type="hidden" class="id" name="id" value="">
-                            <div class="col">
-                                <label for="recipient-name" class="col-form-label">Material :</label>
-                                <input type="text" class="form-control material" name="material" value="">
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-4">
-                                <label for="recipient-name" class="col-form-label" id="label-jumlah"></label>
-                                <input type="number" class="form-control jumlah" min="1" placeholder="1" name="jumlah">
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-8">
-                                <label class="form-label">Tanggal</label>
-                                <div class="form-group">
-                                    <input class="form-control" type="date" value="" name="InputTgl" value="">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col">
-                                <label for="message-text" class="col-form-label">Keterangan: </label>
-                                <textarea class="form-control keterangan" name="keterangan"></textarea>
-                            </div>
-                        </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-            </form>
-        </div>
-    </div>
-</div>
-<!-- modalEnd  -->
+
 <?= $this->endSection() ?>
